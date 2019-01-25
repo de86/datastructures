@@ -18,6 +18,18 @@ class LinkedList {
     }
 
 
+    removeHeadNode() {
+        if (!this.head && !this.tail) {
+            throw {name: 'EmptyListError', message: 'Failed to perform operation on empty list'};
+        } else if (this.head && this.head.nextNode) {
+            this.head = this.head.nextNode;
+        } else if (this.head == this.tail) {
+            this.head = null;
+            this.tail = null;
+        }
+    }
+
+
     addNodeToTail(value) {
         const newTailNode = new Node(value);
 
@@ -30,45 +42,6 @@ class LinkedList {
         }
         
         this.tail = newTailNode;
-    }
-
-
-    insertNodeAtIndex(value, index) {
-        const errIndexOutOfBounds = {name: 'IndexOutOfBoundsError', message: 'Index is out of bounds'};
-
-        if (index < 0) {
-            throw errIndexOutOfBounds;
-        } else if (index == 0) {
-            this.insertValueAtFront(value);
-        } else {
-            let currentNode = this.head;
-            let prevNode;
-            const newNode = new Node(value);
-            
-            for (let i = 0; i < index; i++) {
-                if (!currentNode) {
-                    throw errIndexOutOfBounds;
-                }
-    
-                prevNode = currentNode;
-                currentNode = currentNode.nextNode;
-            }
-    
-            prevNode.nextNode = newNode;
-            newNode.nextNode = currentNode;
-        }
-    }
-
-
-    removeHeadNode() {
-        if (!this.head && !this.tail) {
-            throw {name: 'EmptyListError', message: 'Failed to perform operation on empty list'};
-        } else if (this.head && this.head.nextNode) {
-            this.head = this.head.nextNode;
-        } else if (this.head == this.tail) {
-            this.head = null;
-            this.tail = null;
-        }
     }
 
 
@@ -93,13 +66,40 @@ class LinkedList {
     }
 
 
+    insertNodeAtIndex(value, index) {
+        const errIndexOutOfBounds = {name: 'IndexOutOfBoundsError', message: 'Index is out of bounds'};
+
+        if (index < 0) {
+            throw errIndexOutOfBounds;
+        } else if (index == 0) {
+            this.addNodeToHead(value);
+        } else {
+            let currentNode = this.head;
+            let prevNode;
+            const newNode = new Node(value);
+            
+            for (let i = 0; i < index; i++) {
+                if (!currentNode) {
+                    throw errIndexOutOfBounds;
+                }
+    
+                prevNode = currentNode;
+                currentNode = currentNode.nextNode;
+            }
+    
+            prevNode.nextNode = newNode;
+            newNode.nextNode = currentNode;
+        }
+    }
+
+
     removeNodeAtIndex(index) {
         const errIndexOutOfBounds = {name: 'IndexOutOfBoundsError', message: 'Index is out of bounds'};
 
         if (index < 0) {
             throw errIndexOutOfBounds;
         } else if (index == 0) {
-            this.removeFirstValue();
+            this.removeHeadNode();
         } else {
             let currentNode = this.head;
             let prevNode;
