@@ -5,7 +5,7 @@ class LinkedList {
     }
 
 
-    insertValueAtFront(value) {
+    addNodeToHead(value) {
         const newHeadNode = new Node(value);
         
         if (!this.head && !this.tail) {
@@ -18,7 +18,7 @@ class LinkedList {
     }
 
 
-    insertValueAtBack(value) {
+    addNodeToTail(value) {
         const newTailNode = new Node(value);
 
         if (!this.head && !this.tail) {
@@ -33,7 +33,7 @@ class LinkedList {
     }
 
 
-    insertValueAtIndex(value, index) {
+    insertNodeAtIndex(value, index) {
         const errIndexOutOfBounds = {name: 'IndexOutOfBoundsError', message: 'Index is out of bounds'};
 
         if (index < 0) {
@@ -60,7 +60,7 @@ class LinkedList {
     }
 
 
-    removeFirstValue() {
+    removeFirstNode() {
         if (!this.head && !this.tail) {
             throw {name: 'EmptyListError', message: 'Failed to perform operation on empty list'};
         } else if (this.head && this.head.nextNode) {
@@ -72,7 +72,7 @@ class LinkedList {
     }
 
 
-    removeLastValue() {
+    removeLastNode() {
         if (!this.head && !this.tail) {
             throw {name: 'EmptyListError', message: 'Failed to perform operation on empty list'};
         } else if (this.head == this.tail) {
@@ -93,7 +93,7 @@ class LinkedList {
     }
 
 
-    removeValueAtIndex(index) {
+    removeNodeAtIndex(index) {
         const errIndexOutOfBounds = {name: 'IndexOutOfBoundsError', message: 'Index is out of bounds'};
 
         if (index < 0) {
@@ -123,7 +123,7 @@ class LinkedList {
     }
 
 
-    getValueByIndex(index) {
+    getNodeByIndex(index) {
         const errIndexOutOfBounds = {name: 'IndexOutOfBoundsError', message: 'Index is out of bounds'};
 
         if (index < 0) {
@@ -169,13 +169,14 @@ class Node {
 
 
 const linkedList = new LinkedList();
-linkedList.insertValueAtBack('asdf');
-linkedList.insertValueAtFront('ydfg');
-linkedList.insertValueAtBack('new back');
-linkedList.insertValueAtFront('new front');
-linkedList.insertValueAtIndex('test', 2);
-linkedList.insertValueAtIndex('test 2', 3);
+linkedList.addNodeToTail('Victor');
+linkedList.addNodeToHead('Romelu');
+linkedList.addNodeToTail('Paul');
+linkedList.addNodeToHead('Marcus');
+linkedList.insertNodeAtIndex('Jesse', 2);
+linkedList.removeFirstNode();
+linkedList.insertNodeAtIndex('Juan', 3);
 console.log(linkedList.toString());
-linkedList.removeValueAtIndex(5);
+linkedList.removeNodeAtIndex(4);
 console.log(linkedList.toString());
-console.log(linkedList.getValueByIndex(0).value);
+console.log(linkedList.getNodeByIndex(0).value);
