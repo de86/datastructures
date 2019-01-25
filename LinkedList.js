@@ -2,6 +2,9 @@ class LinkedList {
     constructor() {
         this.head = null;
         this.tail = null;
+
+        this.errIndexOutOfBounds = {name: 'IndexOutOfBoundsError', message: 'Index is out of bounds'};
+        this.errEmptyList = {name: 'EmptyListError', message: 'Failed to perform operation on empty list'};
     }
 
 
@@ -20,7 +23,7 @@ class LinkedList {
 
     removeHeadNode() {
         if (!this.head && !this.tail) {
-            throw {name: 'EmptyListError', message: 'Failed to perform operation on empty list'};
+            throw this.errEmptyList;
         } else if (this.head && this.head.nextNode) {
             this.head = this.head.nextNode;
         } else if (this.head == this.tail) {
@@ -47,7 +50,7 @@ class LinkedList {
 
     removeTailNode() {
         if (!this.head && !this.tail) {
-            throw {name: 'EmptyListError', message: 'Failed to perform operation on empty list'};
+            throw this.errEmptyList;
         } else if (this.head == this.tail) {
             this.head = null;
             this.tail = null;
@@ -67,10 +70,10 @@ class LinkedList {
 
 
     insertNodeAtIndex(value, index) {
-        const errIndexOutOfBounds = {name: 'IndexOutOfBoundsError', message: 'Index is out of bounds'};
-
-        if (index < 0) {
-            throw errIndexOutOfBounds;
+        if (!this.head && !this.tail) {
+            throw this.errEmptyList;
+        } else if (index < 0) {
+            throw this.errIndexOutOfBounds;
         } else if (index == 0) {
             this.addNodeToHead(value);
         } else {
@@ -94,10 +97,10 @@ class LinkedList {
 
 
     removeNodeAtIndex(index) {
-        const errIndexOutOfBounds = {name: 'IndexOutOfBoundsError', message: 'Index is out of bounds'};
-
-        if (index < 0) {
-            throw errIndexOutOfBounds;
+        if (!this.head && !this.tail) {
+            throw this.errEmptyList;
+        } else if (index < 0) {
+            throw this.errIndexOutOfBounds;
         } else if (index == 0) {
             this.removeHeadNode();
         } else {
@@ -124,10 +127,10 @@ class LinkedList {
 
 
     getNodeByIndex(index) {
-        const errIndexOutOfBounds = {name: 'IndexOutOfBoundsError', message: 'Index is out of bounds'};
-
-        if (index < 0) {
-            throw errIndexOutOfBounds;
+        if (!this.head && !this.tail) {
+            throw this.errEmptyList;
+        } else if (index < 0) {
+            throw this.errIndexOutOfBounds;
         } else if (index == 0) {
             return this.head;
         } else {
