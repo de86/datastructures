@@ -60,7 +60,7 @@ class LinkedList {
     }
 
 
-    removeFirstNode() {
+    removeHeadNode() {
         if (!this.head && !this.tail) {
             throw {name: 'EmptyListError', message: 'Failed to perform operation on empty list'};
         } else if (this.head && this.head.nextNode) {
@@ -72,7 +72,7 @@ class LinkedList {
     }
 
 
-    removeLastNode() {
+    removeTailNode() {
         if (!this.head && !this.tail) {
             throw {name: 'EmptyListError', message: 'Failed to perform operation on empty list'};
         } else if (this.head == this.tail) {
@@ -173,8 +173,10 @@ linkedList.addNodeToTail('Victor');
 linkedList.addNodeToHead('Romelu');
 linkedList.addNodeToTail('Paul');
 linkedList.addNodeToHead('Marcus');
+linkedList.addNodeToHead('David');
+linkedList.removeTailNode();
 linkedList.insertNodeAtIndex('Jesse', 2);
-linkedList.removeFirstNode();
+linkedList.removeHeadNode();
 linkedList.insertNodeAtIndex('Juan', 3);
 console.log(linkedList.toString());
 linkedList.removeNodeAtIndex(4);
