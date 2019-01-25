@@ -79,8 +79,8 @@ class LinkedList {
             this.head = null;
             this.tail = null;
         } else {
-            let penultimateNode = this.head;
             let currentNode = this.head;
+            let penultimateNode;
 
             while (currentNode.nextNode) {
                 penultimateNode = currentNode;
@@ -114,7 +114,8 @@ class LinkedList {
             }
     
             if (!currentNode.nextNode) {
-                this.removeLastValue();
+                prevNode.nextNode = null;
+                this.tail = prevNode;
             } else {
                 prevNode.nextNode = currentNode.nextNode;
             }
