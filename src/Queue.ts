@@ -1,4 +1,7 @@
-class Queue<QueueType> {
+import {LinkedList, ListNode} from './LinkedList';
+
+
+export class Queue<QueueType> {
     private list: LinkedList<QueueType>;
 
 
@@ -20,6 +23,7 @@ class Queue<QueueType> {
     public peek(): ListNode<QueueType> {
         return this.list.getTailNode();
     }
+
 
     public getLength(): number {
         return this.list.getLength();

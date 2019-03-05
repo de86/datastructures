@@ -3,7 +3,7 @@ interface listError {
     message: String;
 }
 
-class LinkedList<ListType> {
+export class LinkedList<ListType> {
     private head: ListNode<ListType>;
     private tail: ListNode<ListType>;
 
@@ -203,11 +203,11 @@ class LinkedList<ListType> {
 }
 
 
-class ListNode<ListNodeType> {
+export class ListNode<ListNodeType> {
     value: ListNodeType;
     nextNode: ListNode<ListNodeType>;
 
-    constructor(value) {
+    constructor(value: ListNodeType) {
         this.value = value;
         this.nextNode = null;
     }
