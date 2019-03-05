@@ -1,15 +1,45 @@
-class LinkedList {
+interface listError {
+    name: String;
+    message: String;
+}
+
+class LinkedList<ListType> {
+    private head: ListNode<ListType>;
+    private tail: ListNode<ListType>;
+
+    private count: number;
+
+    private errIndexOutOfBounds: listError;
+    private errEmptyList: listError;
+
     constructor() {
         this.head = null;
         this.tail = null;
+
+        this.count = 0;
 
         this.errIndexOutOfBounds = {name: 'IndexOutOfBoundsError', message: 'Index is out of bounds'};
         this.errEmptyList = {name: 'EmptyListError', message: 'Failed to perform operation on empty list'};
     }
 
 
-    addNodeToHead(value) {
-        const newHeadNode = new Node(value);
+    public getHeadNode(): ListNode<ListType> {
+        return this.head;
+    }
+
+
+    public getTailNode(): ListNode<ListType> {
+        return this.tail;
+    }
+
+    
+    public getLength(): number {
+        return this.count;
+    }
+
+
+    public addNodeToHead(value: ListType): void {
+        const newHeadNode = new ListNode<ListType>(value);
         
         if (!this.head && !this.tail) {
             this.head = newHeadNode;
@@ -18,23 +48,27 @@ class LinkedList {
             newHeadNode.nextNode = this.head;
             this.head = newHeadNode;
         }
+
+        this.count++;
     }
 
 
-    removeHeadNode() {
+    public removeHeadNode(): void {
         if (!this.head && !this.tail) {
             throw this.errEmptyList;
         } else if (this.head && this.head.nextNode) {
             this.head = this.head.nextNode;
+            this.count--;
         } else if (this.head == this.tail) {
             this.head = null;
             this.tail = null;
+            this.count = 0;
         }
     }
 
 
-    addNodeToTail(value) {
-        const newTailNode = new Node(value);
+    public addNodeToTail(value: ListType): void {
+        const newTailNode = new ListNode<ListType>(value);
 
         if (!this.head && !this.tail) {
             this.head = newTailNode;
@@ -45,15 +79,17 @@ class LinkedList {
         }
         
         this.tail = newTailNode;
+        this.count++;
     }
 
 
-    removeTailNode() {
+    public removeTailNode(): void {
         if (!this.head && !this.tail) {
             throw this.errEmptyList;
         } else if (this.head == this.tail) {
             this.head = null;
             this.tail = null;
+            this.count = 0;
         } else {
             let currentNode = this.head;
             let penultimateNode;
@@ -65,11 +101,12 @@ class LinkedList {
 
             penultimateNode.nextNode = null;
             this.tail = penultimateNode;
+            this.count--;
         }
     }
 
 
-    insertNodeAtIndex(value, index) {
+    public insertNodeAtIndex(value: ListType, index: number): void {
         if (!this.head && !this.tail) {
             throw this.errEmptyList;
         } else if (index < 0) {
@@ -79,11 +116,11 @@ class LinkedList {
         } else {
             let currentNode = this.head;
             let prevNode;
-            const newNode = new Node(value);
+            const newNode = new ListNode<ListType>(value);
             
             for (let i = 0; i < index; i++) {
                 if (!currentNode) {
-                    throw errIndexOutOfBounds;
+                    throw this.errIndexOutOfBounds;
                 }
     
                 prevNode = currentNode;
@@ -92,11 +129,12 @@ class LinkedList {
     
             prevNode.nextNode = newNode;
             newNode.nextNode = currentNode;
+            this.count++;
         }
     }
 
 
-    removeNodeAtIndex(index) {
+    public removeNodeAtIndex(index: number): void {
         if (!this.head && !this.tail) {
             throw this.errEmptyList;
         } else if (index < 0) {
@@ -112,7 +150,7 @@ class LinkedList {
                 currentNode = currentNode.nextNode;
 
                 if (!currentNode) {
-                    throw errIndexOutOfBounds;
+                    throw this.errIndexOutOfBounds;
                 }
             }
     
@@ -122,11 +160,13 @@ class LinkedList {
             } else {
                 prevNode.nextNode = currentNode.nextNode;
             }
+
+            this.count--;
         }
     }
 
 
-    getNodeByIndex(index) {
+    public getNodeByIndex(index: number): ListNode<ListType> {
         if (!this.head && !this.tail) {
             throw this.errEmptyList;
         } else if (index < 0) {
@@ -140,7 +180,7 @@ class LinkedList {
                 currentNode = currentNode.nextNode;
 
                 if (!currentNode) {
-                    throw errIndexOutOfBounds;
+                    throw this.errIndexOutOfBounds;
                 }
             }
     
@@ -149,7 +189,7 @@ class LinkedList {
     }
 
 
-    toString() {
+    public toString(): String {
         let currentNode = this.head;
         let str = ''
 
@@ -163,7 +203,10 @@ class LinkedList {
 }
 
 
-class Node {
+class ListNode<ListNodeType> {
+    value: ListNodeType;
+    nextNode: ListNode<ListNodeType>;
+
     constructor(value) {
         this.value = value;
         this.nextNode = null;
