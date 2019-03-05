@@ -256,19 +256,3 @@ export class ListNode<ListNodeType> {
         this.nextNode = null;
     }
 }
-
-
-const linkedList = new LinkedList();
-linkedList.addNodeToTail('Victor');
-linkedList.addNodeToHead('Romelu');
-linkedList.addNodeToTail('Paul');
-linkedList.addNodeToHead('Marcus');
-linkedList.addNodeToHead('David');
-linkedList.removeTailNode();
-linkedList.insertNodeAtIndex('Jesse', 2);
-linkedList.removeHeadNode();
-linkedList.insertNodeAtIndex('Juan', 3);
-console.log(linkedList.toString());
-linkedList.removeNodeAtIndex(4);
-console.log(linkedList.toString());
-console.log(linkedList.getNodeByIndex(0).value);
