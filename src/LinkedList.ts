@@ -23,21 +23,35 @@ export class LinkedList<ListType> {
     }
 
 
+    /**
+     * Get the node at the head of the Linked List.
+     */
     public getHeadNode(): ListNode<ListType> {
         return this.head;
     }
 
 
+    /**
+     * Get the node at the tail of the Linked List.
+     */
     public getTailNode(): ListNode<ListType> {
         return this.tail;
     }
 
     
-    public getLength(): number {
+    /**
+     * Get the number of items in the Linked List.
+     */
+    public getCount(): number {
         return this.count;
     }
 
 
+    /**
+     * Add a node to the head of the Linked List.
+     * 
+     * @param value {ListType} The value and type to be stored.
+     */
     public addNodeToHead(value: ListType): void {
         const newHeadNode = new ListNode<ListType>(value);
         
@@ -53,6 +67,9 @@ export class LinkedList<ListType> {
     }
 
 
+    /**
+     * Remove the head node from the Linked List.
+     */
     public removeHeadNode(): void {
         if (!this.head && !this.tail) {
             throw this.errEmptyList;
@@ -67,6 +84,11 @@ export class LinkedList<ListType> {
     }
 
 
+    /**
+     * Add a node to the tail of the Linked List.
+     * 
+     * @param value {ListType} The value and type to be stored.
+     */
     public addNodeToTail(value: ListType): void {
         const newTailNode = new ListNode<ListType>(value);
 
@@ -83,6 +105,11 @@ export class LinkedList<ListType> {
     }
 
 
+    /**
+     * Remove the tail node from the Linked List.
+     * 
+     * @param value {ListType} Add a new value of the given type to the head of the Linked List.
+     */
     public removeTailNode(): void {
         if (!this.head && !this.tail) {
             throw this.errEmptyList;
@@ -106,6 +133,12 @@ export class LinkedList<ListType> {
     }
 
 
+     /**
+     * Add a node containing the given value and type at the given index.
+     * 
+     * @param value {ListType} The value and type to be stored.
+     * @param index {number} The index to store the given value at.
+     */
     public insertNodeAtIndex(value: ListType, index: number): void {
         if (!this.head && !this.tail) {
             throw this.errEmptyList;
@@ -134,6 +167,11 @@ export class LinkedList<ListType> {
     }
 
 
+    /**
+     * Remove the node from the Linked List at the given index.
+     * 
+     * @param index {number} The index of the node remove.
+     */
     public removeNodeAtIndex(index: number): void {
         if (!this.head && !this.tail) {
             throw this.errEmptyList;
@@ -165,7 +203,11 @@ export class LinkedList<ListType> {
         }
     }
 
-
+    /**
+     * Get the node stored at the given index.
+     * 
+     * @param index {number} The index of the node to retrieve.
+     */
     public getNodeByIndex(index: number): ListNode<ListType> {
         if (!this.head && !this.tail) {
             throw this.errEmptyList;
@@ -188,7 +230,9 @@ export class LinkedList<ListType> {
         }
     }
 
-
+    /**
+     * Get a string representation of the current state of the Linked List
+     */
     public toString(): String {
         let currentNode = this.head;
         let str = ''
