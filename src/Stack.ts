@@ -1,37 +1,37 @@
 import {LinkedList} from './LinkedList';
 
 
-export class Queue<QueueType> {
-    private list: LinkedList<QueueType>;
+export class Stack<StackType> {
+    private list: LinkedList<StackType>;
 
 
     constructor() {
-        this.list = new LinkedList<QueueType>();
+        this.list = new LinkedList<StackType>();
     }
 
 
     /**
-     * Add a value to the back of the Queue.
+     * Add a value to the top of the Stack.
      * 
-     * @param value {ListType} The value and type to be stored.
+     * @param value {ListType} The value to be added to the stack.
      */
-    public add(value: QueueType): void {
+    public push(value: StackType): void {
         this.list.addToHead(value);
     }
 
 
     /**
-     * Remove the value at the front of the Queue.
+     * Remove the value at the top of the stack.
      */
-    public remove(): QueueType {
-        return this.list.removeTail();
+    public pop(): StackType {
+        return this.list.removeHead();
     }
 
 
     /**
      * Returns the value at the front of the Queue without removing it.
      */
-    public peek(): QueueType {
+    public peek(): StackType {
         return this.list.getTail();
     }
 

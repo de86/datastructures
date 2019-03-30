@@ -1,22 +1,22 @@
-interface listError {
+interface IListError {
     name: String;
     message: String;
 }
 
-export class LinkedList<ListType> {
+export default class LinkedList<ListType> {
     private head: ListNode<ListType>;
     private tail: ListNode<ListType>;
 
-    private count: number;
+    private size: number;
 
-    private errIndexOutOfBounds: listError;
-    private errEmptyList: listError;
+    private errIndexOutOfBounds: IListError;
+    private errEmptyList: IListError;
 
     constructor() {
         this.head = null;
         this.tail = null;
 
-        this.count = 0;
+        this.size = 0;
 
         this.errIndexOutOfBounds = {name: 'IndexOutOfBoundsError', message: 'Index is out of bounds'};
         this.errEmptyList = {name: 'EmptyListError', message: 'Failed to perform operation on empty list'};
@@ -26,24 +26,24 @@ export class LinkedList<ListType> {
     /**
      * Get the node at the head of the Linked List.
      */
-    public getHeadNode(): ListNode<ListType> {
-        return this.head;
+    public getHead(): ListType {
+        return this.head ? this.head.value : null;
     }
 
 
     /**
      * Get the node at the tail of the Linked List.
      */
-    public getTailNode(): ListNode<ListType> {
-        return this.tail;
+    public getTail(): ListType {
+        return this.tail ? this.tail.value : null;
     }
 
     
     /**
      * Get the number of items in the Linked List.
      */
-    public getCount(): number {
-        return this.count;
+    public getSize(): number {
+        return this.size;
     }
 
 
@@ -52,7 +52,7 @@ export class LinkedList<ListType> {
      * 
      * @param value {ListType} The value and type to be stored.
      */
-    public addNodeToHead(value: ListType): void {
+    public addToHead(value: ListType): void {
         const newHeadNode = new ListNode<ListType>(value);
         
         if (!this.head && !this.tail) {
@@ -63,24 +63,32 @@ export class LinkedList<ListType> {
             this.head = newHeadNode;
         }
 
-        this.count++;
+        this.size++;
     }
 
 
     /**
      * Remove the head node from the Linked List.
      */
-    public removeHeadNode(): void {
+    public removeHead(): ListType {
+        let removedNodeValue;
+
         if (!this.head && !this.tail) {
             throw this.errEmptyList;
         } else if (this.head && this.head.nextNode) {
+            removedNodeValue = this.head.value;
+
             this.head = this.head.nextNode;
-            this.count--;
+            this.size--;
         } else if (this.head == this.tail) {
+            removedNodeValue = this.head.value;
+
             this.head = null;
             this.tail = null;
-            this.count = 0;
+            this.size = 0;
         }
+
+        return removedNodeValue;
     }
 
 
@@ -89,7 +97,7 @@ export class LinkedList<ListType> {
      * 
      * @param value {ListType} The value and type to be stored.
      */
-    public addNodeToTail(value: ListType): void {
+    public addToTail(value: ListType): void {
         const newTailNode = new ListNode<ListType>(value);
 
         if (!this.head && !this.tail) {
@@ -101,7 +109,7 @@ export class LinkedList<ListType> {
         }
         
         this.tail = newTailNode;
-        this.count++;
+        this.size++;
     }
 
 
@@ -110,14 +118,21 @@ export class LinkedList<ListType> {
      * 
      * @param value {ListType} Add a new value of the given type to the head of the Linked List.
      */
-    public removeTailNode(): void {
+    public removeTail(): ListType {
+        let removedNodeValue;
+
         if (!this.head && !this.tail) {
             throw this.errEmptyList;
         } else if (this.head == this.tail) {
+            removedNodeValue = this.head.value;
+
             this.head = null;
             this.tail = null;
-            this.count = 0;
+            this.size = 0;
+
         } else {
+            removedNodeValue = this.head.value;
+
             let currentNode = this.head;
             let penultimateNode;
 
@@ -128,8 +143,10 @@ export class LinkedList<ListType> {
 
             penultimateNode.nextNode = null;
             this.tail = penultimateNode;
-            this.count--;
+            this.size--;
         }
+
+        return removedNodeValue;
     }
 
 
@@ -139,13 +156,13 @@ export class LinkedList<ListType> {
      * @param value {ListType} The value and type to be stored.
      * @param index {number} The index to store the given value at.
      */
-    public insertNodeAtIndex(value: ListType, index: number): void {
+    public insertAtIndex(index: number, value: ListType): void {
         if (!this.head && !this.tail) {
             throw this.errEmptyList;
         } else if (index < 0) {
             throw this.errIndexOutOfBounds;
         } else if (index == 0) {
-            this.addNodeToHead(value);
+            this.addToHead(value);
         } else {
             let currentNode = this.head;
             let prevNode;
@@ -162,7 +179,7 @@ export class LinkedList<ListType> {
     
             prevNode.nextNode = newNode;
             newNode.nextNode = currentNode;
-            this.count++;
+            this.size++;
         }
     }
 
@@ -172,13 +189,13 @@ export class LinkedList<ListType> {
      * 
      * @param index {number} The index of the node remove.
      */
-    public removeNodeAtIndex(index: number): void {
+    public removeAtIndex(index: number): ListType {
         if (!this.head && !this.tail) {
             throw this.errEmptyList;
         } else if (index < 0) {
             throw this.errIndexOutOfBounds;
         } else if (index == 0) {
-            this.removeHeadNode();
+            return this.removeHead();
         } else {
             let currentNode = this.head;
             let prevNode;
@@ -192,29 +209,40 @@ export class LinkedList<ListType> {
                 }
             }
     
+            let removedNodeValue;
             if (!currentNode.nextNode) {
+                removedNodeValue = currentNode.value;
+
                 prevNode.nextNode = null;
                 this.tail = prevNode;
+
+                
             } else {
+                removedNodeValue = currentNode.nextNode.value;
+
+                removedNodeValue = prevNode.nextNode.value;
                 prevNode.nextNode = currentNode.nextNode;
             }
 
-            this.count--;
+            this.size--;
+
+            return removedNodeValue;
         }
     }
+
 
     /**
      * Get the node stored at the given index.
      * 
      * @param index {number} The index of the node to retrieve.
      */
-    public getNodeByIndex(index: number): ListNode<ListType> {
+    public getByIndex(index: number): ListType {
         if (!this.head && !this.tail) {
             throw this.errEmptyList;
         } else if (index < 0) {
             throw this.errIndexOutOfBounds;
         } else if (index == 0) {
-            return this.head;
+            return this.head.value;
         } else {
             let currentNode = this.head;
             
@@ -226,8 +254,18 @@ export class LinkedList<ListType> {
                 }
             }
     
-            return currentNode;
+            return currentNode.value;
         }
+    }
+
+
+    /**
+     * Remove all items from the list
+     */
+    public clear(): void {
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
     }
 
     /**
